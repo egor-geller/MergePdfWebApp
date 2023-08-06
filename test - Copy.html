@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Merge PDF</title>
+  </head>
+  <body>
+    <button onclick="fclick();">Go</button>
+    <button onclick="fclickorg();">ORG</button>
+    <script>
+      function fclick() {
+        // Sending and receiving data in JSON format using POST method
+        //
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost/MergePdfWebApp/api/values" ;//"https://localhost:44308/api/values";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            console.log(json.email + ", " + json.password);
+          }
+        };
+        var data = JSON.stringify({
+          enviroment: "enviroment-sasa",
+          fileName: "fileName-sasa",
+          fullRsUrl: "GoremYozem=9998&Shana=2022&Numerator=4&MsMahadura=1",
+          fileUrl: "fileUrl-sasa",
+          rsName: "rsName-sasa",
+          mifratLink1: "mifratLink-sasa",
+        });
+        xhr.send(data);
+      }
+
+      function fclickorg() {
+        /*************************/
+        var fileUrl =
+          "\\\\TAMLOGFIN\\C$\\TEMP\\FILES\\UPLOADS\\HAZMANA_TUBIN\\"; //getElement("55000").value;
+
+        var fileName = "hanmana_tubin_rs"; //getElement('55003').value;
+        // var startUrl = getElement("17130").value;
+        var endUrl =
+          "&rc:Toolbar=false&rs:Command=Render&rs:ClearSession=true&rs:Format=pdf";
+        var fullRsUrl =
+          "GoremYozem=9998&Shana=2022&Numerator=34&MsMahadura=1&StatusHazmana=2&SugTofes=3&SumIsBig=0&ShanaTaktzivit=2022&GoremHeskem=0&ShanaHeskem=0&NuHeskem=0&SapakNo=1005&MsMachsan=607"; //getElement("17130").value; // startUrl;//params //+ endUrl;
+        var url = fileUrl + "-" + fileName;
+        var rsName = "/Hazmana-Tubin"; //getElement("50001").value;
+        var enviroment = "SAPIENS"; //getElement("30450").value; //'sapiens';
+        var mifratLink =
+          "\\\\TAMLOGFIN\\C$\\TEMP\\FILES\\UPLOADS\\KATALOG_TUBIN\\1010015-מפרט מקדחה.PDF                                                                "; //getElement("3424").value;
+        /*************************/
+        var serverName = "";//getElement("36365").value;
+
+        var request = new XMLHttpRequest();
+        // var newpf = parseInt(pf);
+        var Details = {
+          enviroment: enviroment,
+          fileName: fileName,
+          fullRsUrl: fullRsUrl,
+          fileUrl: fileUrl,
+          rsName: rsName,
+          mifratLink: mifratLink,
+        };
+
+        let urlEncodedData = "",
+          urlEncodedDataPairs = [],
+          name;
+
+        for (name in Details) {
+          urlEncodedDataPairs.push(
+            encodeURIComponent(name) + "=" + encodeURIComponent(Details[name])
+          );
+        }
+        // Combine the pairs into a single string and replace all %-encoded spaces to
+        // the '+' character; matches the behavior of browser form submissions.
+        urlEncodedData = urlEncodedDataPairs.join("&").replace(/%20/g, "+");
+
+        serverName = "localhost";
+        try {
+          //request.open('POST','https://localhost:44372/api/values',false);
+          request.open(
+            "POST",
+            "http://" + serverName + "/MergePdfWebApp/api/values",
+            false
+          );
+
+          request.setRequestHeader(
+            "Content-type",
+            "application/x-www-form-urlencoded"
+          );
+
+         
+          request.send(urlEncodedData);
+          console.log("Request -> ","request.readyState:",request.readyState,"request.status:",request.status);
+          if (request.readyState === 4) {
+            if (request.status === 200) {
+              //alert('\u05e2\u05d5\u05d3\u05db\u05df\u0020\u05d1\u05d4\u05e6\u05dc\u05d7\u05d4');
+              /************************************************************************************/
+
+              // var newpf = parseInt(pf);
+              //var fileName = getElement('55004').value;
+              var url = "http://localhost/MergePdfWebApp/files/test.pdf";
+              //"\\\\portal\\SAP_IL.Life and Pensions\\TLV\\larisa\\files\\test.pdf";//fileUrl + "rsAndMifrat.pdf";
+              var nav = navigator.userAgent;
+              var browser =
+                nav.match(
+                  /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
+                ) || [];
+              //alert(url)
+              try {
+                setTimeout(function () {
+                  if (browser[1] != "Chrome") {
+                    var myWindow = window.open(
+                      url,
+                      "",
+                      ",toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes"
+                    );
+                  } else {
+                    //window.open(url, "", "location=no,scrollbars=yes,menubar=0,toolbar=0,status=1,top=0,left=0,resizable=1,width=" + w + ",height=" + h);
+                    window.open(
+                      url,
+                      "_blank",
+                      "resizable=yes, scrollbars=yes, titlebar=yes, width=800, height=900, top=10, left=10"
+                    );
+                    //var myWindow = window.open(url, "_parent", ',toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
+                  }
+                  //myWindow.focus();
+                }, 2);
+              } catch (e) {
+                alert(
+                  "\u05DC\u05D0 \u05E0\u05DE\u05E6\u05D0 \u05E7\u05D5\u05D1\u05E5 \u05DC\u05D4\u05E6\u05D2\u05D4. "
+                );
+              }
+              //}
+              // if (pf) {
+              //   execCommand(newpf);
+              // }
+              /************************************************************************************/
+            } else {
+              alert(request.statusText + " status no " + request.status,
+                "\u05db\u05e9\u05dc\u05d5\u05df\u0020\u05d1\u05e2\u05d3\u05db\u05d5\u05df\u0020\u05d8\u05e7\u05e1\u05d8"
+              );
+            }
+          }
+        } catch (error) {
+          alert("ERROR",error.message,
+            "\u05e9\u05d2\u05d9\u05d0\u05d4 \u05d1\u05e2\u05d3\u05db\u05d5\u05df \u05d4\u05d8\u05e7\u05e1\u05d8."
+          );
+        }
+      }
+    </script>
+  </body>
+</html>
